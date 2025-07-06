@@ -1,5 +1,6 @@
-package com.hoffmann.songify;
+package com.hoffmann.songify.song;
 
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Log4j2
-public class SongsController {
+public class SongRestController {
 
     Map<Integer, String> database = new HashMap<>(Map.of(
             1, "Shawn Mendes song",
@@ -45,5 +46,14 @@ public class SongsController {
         }
         SingleSongReponseDto response = new SingleSongReponseDto(song);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/songs")
+    public ResponseEntity<SingleSongReponseDto> postSong(@RequestBody @Valid SongRequestDto request)
+    {
+        String songName = request.songName();
+        database.put(database.size() + 1, request.songName());
+        log.info("added new song: " + songName);
+        return ResponseEntity.ok(new SingleSongReponseDto(songName));
     }
 }

@@ -1,6 +1,5 @@
-package com.hoffmann.songify;
+package com.hoffmann.songify.song;
 
-import java.util.List;
 import java.util.Map;
 
 public record SongResponseDto(Map<Integer, String> songs) {

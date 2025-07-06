@@ -1,4 +1,4 @@
-package com.hoffmann.songify;
+package com.hoffmann.songify.song;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-public class SongsViewController {
+public class SongViewController {
 
     private Map<Integer, String> database = new HashMap<>(Map.of(
             0, "Shawa Song",
@@ -26,8 +26,9 @@ public class SongsViewController {
     @GetMapping("/view/songs")
     public String songs(Model model) {
 
-
         model.addAttribute("database", database);
         return "songs.html";
     }
+
+
 }
