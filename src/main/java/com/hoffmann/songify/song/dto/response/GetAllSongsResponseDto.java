@@ -4,5 +4,5 @@ import com.hoffmann.songify.song.controller.SongEntity;
 
 import java.util.Map;
 
-public record SongResponseDto(Map<Integer, SongEntity> songs) {
+public record GetAllSongsResponseDto(Map<Integer, SongEntity> songs) {
 }
