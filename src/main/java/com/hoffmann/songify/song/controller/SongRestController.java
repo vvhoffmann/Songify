@@ -1,6 +1,8 @@
 package com.hoffmann.songify.song.controller;
 
-import com.hoffmann.songify.song.dto.request.SongRequestDto;
+import com.hoffmann.songify.song.dto.request.PartiallyUpdateSongRequestDto;
+import com.hoffmann.songify.song.dto.response.PartiallyUpdateSongResponseDto;
+import com.hoffmann.songify.song.dto.request.CreateSongRequestDto;
 import com.hoffmann.songify.song.dto.request.UpdateSongRequestDto;
 import com.hoffmann.songify.song.dto.response.DeleteSongResponseDto;
 import com.hoffmann.songify.song.dto.response.SingleSongReponseDto;
@@ -57,7 +59,7 @@ public class SongRestController {
     }
 
     @PostMapping("/songs")
-    public ResponseEntity<SingleSongReponseDto> postSong(@RequestBody @Valid SongRequestDto request)
+    public ResponseEntity<SingleSongReponseDto> postSong(@RequestBody @Valid CreateSongRequestDto request)
     {
         SongEntity song = new SongEntity(request.songName(), request.artistName());
         database.put(database.size() + 1, song);
@@ -77,7 +79,7 @@ public class SongRestController {
     }
 
     @PutMapping("/songs/{id}")
-    public ResponseEntity<UpdateSongResponseDto> update(@PathVariable Integer id,
+    public ResponseEntity<UpdateSongResponseDto> updateSong(@PathVariable Integer id,
                                                         @RequestBody @Valid UpdateSongRequestDto request)
     {
         if(!database.containsKey(id))
@@ -86,9 +88,39 @@ public class SongRestController {
         String newArtistName = request.artistName();
         SongEntity newSong = new SongEntity(newSongName, newArtistName);
         SongEntity oldSong = database.put(id, newSong);
-        log.info("updated song with id: " + id + " with old song name " + oldSong + " to " + newSong);
+
+        log.info("updated song with id: " + id + " with old song " + oldSong + " to " + newSong);
         return ResponseEntity.ok(new UpdateSongResponseDto(newSongName, newArtistName));
     }
 
 
+    @PatchMapping("/songs/{id}")
+    public ResponseEntity<PartiallyUpdateSongResponseDto> updateSongPartially(  @PathVariable Integer id,
+                                                                                @RequestBody PartiallyUpdateSongRequestDto request)
+    {
+        if(!database.containsKey(id))
+            throw  new SongNotFoundException("Song with id " + id + " doesn't exist");
+
+        SongEntity oldSong = database.get(id);
+        SongEntity.SongEntityBuilder songBuilder = SongEntity.builder();
+
+        String newArtistName = request.artistName();
+        String newSongName = request.songName();
+
+        if(newSongName != null)
+            songBuilder.name(newSongName);
+        else
+            songBuilder.name(oldSong.name());
+
+        if(newArtistName != null)
+            songBuilder.artist(newArtistName);
+        else
+            songBuilder.artist(oldSong.artist());
+
+        SongEntity updatedSong = songBuilder.build();
+        database.put(id, updatedSong);
+
+        log.info("updated song with id: " + id + " with old song " + oldSong + " to " + updatedSong);
+        return ResponseEntity.ok(new PartiallyUpdateSongResponseDto(updatedSong));
+    }
 }
