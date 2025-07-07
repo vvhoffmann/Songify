@@ -1,4 +1,4 @@
-package com.hoffmann.songify.song.controller;
+package com.hoffmann.songify.song.domain.model;
 
 import lombok.Builder;
 
