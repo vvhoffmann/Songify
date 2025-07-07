@@ -1,7 +1,13 @@
-package com.hoffmann.songify.song;
+package com.hoffmann.songify.song.controller;
 
+import com.hoffmann.songify.song.dto.DeleteSongResponseDto;
+import com.hoffmann.songify.song.dto.SingleSongReponseDto;
+import com.hoffmann.songify.song.dto.SongRequestDto;
+import com.hoffmann.songify.song.dto.SongResponseDto;
+import com.hoffmann.songify.song.error.SongNotFoundException;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,5 +61,16 @@ public class SongRestController {
         database.put(database.size() + 1, request.songName());
         log.info("added new song: " + songName);
         return ResponseEntity.ok(new SingleSongReponseDto(songName));
+    }
+
+    @DeleteMapping("/songs/{id}")
+    public ResponseEntity<DeleteSongResponseDto> deleteSongByIdUsingPathVariable(@PathVariable Integer id)
+    {
+        if(!database.containsKey(id))
+            throw  new SongNotFoundException("Song with id " + id + " doesn't exist");
+        //return new ErrorDeleteSongResponseDto("meggage", HttpStatus.BAD_REQUEST);
+        
+        database.remove(id);
+        return ResponseEntity.ok(new DeleteSongResponseDto("You deleted song with id " + id, HttpStatus.OK));
     }
 }

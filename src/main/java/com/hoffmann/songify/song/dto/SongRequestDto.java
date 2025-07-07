@@ -1,4 +1,4 @@
-package com.hoffmann.songify.song;
+package com.hoffmann.songify.song.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
