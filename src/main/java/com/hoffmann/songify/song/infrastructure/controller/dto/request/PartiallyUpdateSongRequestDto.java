@@ -6,9 +6,9 @@ import jakarta.validation.constraints.NotNull;
 public record PartiallyUpdateSongRequestDto(
         @NotNull(message = "songName must not be null")
         @NotEmpty(message = "songName must not be empty")
-        String songName,
+        String song,
 
         @NotNull(message = "artistName must not be null")
         @NotEmpty(message = "artistName must not be empty")
-        String artistName) {
+        String artist) {
 }

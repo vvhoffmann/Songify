@@ -7,7 +7,6 @@ import com.hoffmann.songify.song.infrastructure.controller.dto.response.*;
 import com.hoffmann.songify.song.domain.model.SongEntity;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashSet;
 import java.util.Map;
 
 public class SongMapper {
@@ -21,7 +20,7 @@ public class SongMapper {
     }
 
     public static SongEntity mapFromCreateSongRequestDtoToSong(CreateSongRequestDto request) {
-        return new SongEntity(request.songName(), request.artistName());
+        return new SongEntity(request.song(), request.artist());
     }
 
     public static CreateSongResponseDto mapFromSongToCreateSongResponseDto(SongEntity song) {
@@ -29,7 +28,7 @@ public class SongMapper {
     }
 
     public static SongEntity mapUpdateSongRequestDtoToSong(UpdateSongRequestDto request) {
-        return new SongEntity(request.songName(), request.artistName());
+        return new SongEntity(request.song(), request.artist());
     }
 
     public static DeleteSongResponseDto mapFromSongToDeleteSongResponseDto(Integer id) {
@@ -43,8 +42,8 @@ public class SongMapper {
     public static SongEntity mapPartiallyUpdateSongRequestDtoToSong(PartiallyUpdateSongRequestDto request, SongEntity oldSong) {
         SongEntity.SongEntityBuilder songBuilder = SongEntity.builder();
 
-        String newArtistName = request.artistName();
-        String newSongName = request.songName();
+        String newArtistName = request.artist();
+        String newSongName = request.song();
 
         if(newSongName != null)
             songBuilder.name(newSongName);

@@ -16,9 +16,8 @@ public class SongRepository {
             4, new SongEntity("no broke boys", "Tekkno Mode")
     ));
 
-    public SongEntity saveToDatabase(SongEntity song) {
-        database.put(database.size() + 1, song);
-        return song;
+    public void saveToDatabase(SongEntity song) {
+        database.put(database.size() + 2, song);
     }
 
     public Map<Integer, SongEntity> findAll() {
