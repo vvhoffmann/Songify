@@ -88,7 +88,7 @@ public class SongRestController {
         SongEntity updatedSong = SongMapper.mapPartiallyUpdateSongRequestDtoToSong(request);
         SongEntity savedSong = songUpdater.updatePartiallyById(id, updatedSong);
 
-        log.info("Updated song: " + savedSong);
+        log.info("Updated song: {}", savedSong);
 
         PartiallyUpdateSongResponseDto body = SongMapper.mapSongToPartiallyUpdateSongDto(savedSong);
         return ResponseEntity.ok(body);
