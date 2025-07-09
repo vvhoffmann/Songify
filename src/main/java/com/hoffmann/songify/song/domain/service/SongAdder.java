@@ -15,11 +15,8 @@ public class SongAdder {
         this.songRepository = songRepository;
     }
 
-    public SongEntity addSong(SongEntity song) {
+    public SongEntity save(SongEntity song) {
         log.info("added new song: " + song);
-
-        songRepository.saveToDatabase(song);
-
-        return song;
+        return songRepository.save(song);
     }
 }

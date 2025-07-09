@@ -2,7 +2,7 @@ package com.hoffmann.songify.song.infrastructure.controller.dto.response;
 
 import com.hoffmann.songify.song.domain.model.SongEntity;
 
-import java.util.Map;
+import java.util.List;
 
-public record GetAllSongsResponseDto(Map<Integer, SongEntity> songs) {
+public record GetAllSongsResponseDto(List<SongEntity> songs) {
 }
