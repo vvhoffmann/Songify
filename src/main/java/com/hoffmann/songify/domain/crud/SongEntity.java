@@ -50,8 +50,11 @@ class SongEntity extends BaseEntity {
     @OneToOne
     private Genre genre;
 
-    public SongEntity(String name) {
+    public SongEntity(final String name, final Instant releaseDate, final Long duration, final SongLanguage language) {
         this.name = name;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+        this.language = language;
     }
 
     @Override

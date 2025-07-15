@@ -1,5 +1,6 @@
 package com.hoffmann.songify.domain.crud;
 
+import com.hoffmann.songify.domain.crud.dto.SongDto;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,12 +13,12 @@ class SongUpdater {
     SongRepository songRepository;
     SongRetriever songRetriever;
 
-    void updateById(Long id, SongEntity song) {
+    SongDto updateById(Long id, SongEntity song) {
         songRetriever.existsById(id);
-        songRepository.updateById(id, song);
+        return songRepository.updateById(id, song);
     }
 
-    SongEntity updatePartiallyById(Long id, SongEntity song) {
+    SongDto updatePartiallyById(Long id, SongEntity song) {
         SongEntity oldSong = songRetriever.findSongById(id);
         String newSongName = song.getName();
 
@@ -29,7 +30,7 @@ class SongUpdater {
             songBuilder.name(oldSong.getName());
 
         SongEntity songToSave = songBuilder.build();
-        songRepository.updateById(id, songToSave);
-        return songToSave;
+
+        return songRepository.updateById(id, songToSave);
     }
 }

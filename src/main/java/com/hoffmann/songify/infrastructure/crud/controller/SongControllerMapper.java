@@ -1,17 +1,13 @@
 package com.hoffmann.songify.infrastructure.crud.controller;
 
 import com.hoffmann.songify.domain.crud.dto.SongDto;
-import com.hoffmann.songify.infrastructure.crud.controller.dto.request.CreateSongRequestDto;
-import com.hoffmann.songify.infrastructure.crud.controller.dto.request.PartiallyUpdateSongRequestDto;
-import com.hoffmann.songify.infrastructure.crud.controller.dto.request.UpdateSongRequestDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.CreateSongResponseDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.DeleteSongResponseDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.GetAllSongsResponseDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.GetSingleSongResponseDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.PartiallyUpdateSongResponseDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.response.SongControllerResponseDto;
-import com.hoffmann.songify.infrastructure.crud.controller.dto.response.UpdateSongResponseDto;
-import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -46,27 +42,8 @@ class SongControllerMapper {
         return new DeleteSongResponseDto("You deleted song with id " + id, HttpStatus.OK);
     }
 
-    public static UpdateSongResponseDto mapFromSongDtoToUpdateSongResponseDto(SongDto song) {
-        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(song.name());
-        return new UpdateSongResponseDto(songControllerResponseDto.name());
-    }
-
     public static PartiallyUpdateSongResponseDto mapFromSongToPartiallyUpdateSongDto(SongDto updatedSong) {
         SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(updatedSong.name());
         return new PartiallyUpdateSongResponseDto(songControllerResponseDto);
     }
-
-    static SongDto mapFromUpdateSongRequestDtoToSongDto(final @Valid UpdateSongRequestDto request) {
-        return new SongDto(request.song());
-    }
-
-    static SongDto mapFromPartiallyUpdateSongRequestDtoToSongDto(final PartiallyUpdateSongRequestDto request) {
-        return new SongDto(request.song());
-    }
-
-    static SongDto mapFromCreateSongRequestDtoToSongDto(final @Valid CreateSongRequestDto request) {
-        return new SongDto(request.song());
-    }
-
-
 }

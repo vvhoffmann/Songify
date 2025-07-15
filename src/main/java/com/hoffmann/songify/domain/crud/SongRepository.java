@@ -1,5 +1,6 @@
 package com.hoffmann.songify.domain.crud;
 
+import com.hoffmann.songify.domain.crud.dto.SongDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,5 +26,5 @@ interface SongRepository extends Repository<SongEntity, Long> {
 
     @Modifying
     @Query("UPDATE SongEntity s SET s.name = :#{#newSong.name} WHERE s.id = :id")
-    void updateById(Long id, SongEntity newSong);
+    SongDto updateById(Long id, SongEntity newSong);
 }

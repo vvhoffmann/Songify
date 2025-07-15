@@ -7,6 +7,7 @@ import com.hoffmann.songify.domain.crud.dto.ArtistRequestDto;
 import com.hoffmann.songify.domain.crud.dto.GenreDto;
 import com.hoffmann.songify.domain.crud.dto.GenreRequestDto;
 import com.hoffmann.songify.domain.crud.dto.SongDto;
+import com.hoffmann.songify.domain.crud.dto.SongRequestDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class SongifyCrudFascade {
     public List<SongDto> findAll(Pageable pageable) {
         return songRetriever.findAll(pageable)
                 .stream()
-                .map(song -> new SongDto(song.getName()))
+                .map(song -> new SongDto(song.getId() ,song.getName()))
                 .toList();
     }
 
@@ -37,24 +38,24 @@ public class SongifyCrudFascade {
         return SongDomainMapper.mapFromSongEntityToSongDto(song);
     }
 
-    public void save(SongDto songToSave) {
-        SongEntity song = new SongEntity(songToSave.name());
-        songAdder.save(song);
+    public SongDto saveSongWithArtist(SongRequestDto songRequestDto) {
+        return songAdder.save(songRequestDto);
     }
 
     public void deleteById(Long id) {
         songDeleter.deleteById(id);
     }
 
-    public void updateById(Long id, SongDto newSong) {
-        SongEntity song = new SongEntity(newSong.name());
-        songUpdater.updateById(id, song);
+    public SongDto updateById(Long id, SongRequestDto newSong) {
+        SongLanguage songLanguage = SongLanguage.valueOf(newSong.language().name());
+        SongEntity song = new SongEntity(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
+        return songUpdater.updateById(id, song);
     }
 
-    public SongDto updatePartiallyById(Long id, SongDto newSong) {
-        SongEntity song = new SongEntity(newSong.name());
-        SongEntity updatedSong = songUpdater.updatePartiallyById(id, song);
-        return SongDomainMapper.mapFromSongEntityToSongDto(updatedSong);
+    public SongDto updatePartiallyById(Long id, SongRequestDto newSong) {
+        SongLanguage songLanguage = SongLanguage.valueOf(newSong.language().name());
+        SongEntity song = new SongEntity(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
+        return songUpdater.updatePartiallyById(id, song);
     }
 
     public ArtistDto addArtist(ArtistRequestDto artistToAdd)
