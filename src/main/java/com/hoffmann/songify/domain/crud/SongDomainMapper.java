@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 class SongDomainMapper {
     public static SongDto mapFromSongEntityToSongDto(SongEntity songEntity) {
-        return new SongDto(songEntity.getName(), songEntity.getArtist());
+        return new SongDto(songEntity.getName());
     }
 }

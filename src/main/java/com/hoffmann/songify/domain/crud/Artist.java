@@ -1,6 +1,5 @@
 package com.hoffmann.songify.domain.crud;
 
-
 import com.hoffmann.songify.domain.crud.util.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,4 +38,7 @@ class Artist extends BaseEntity {
     @ManyToMany
     private Set<Album> albums = new HashSet<>();
 
+    Artist(final String name) {
+        this.name = name;
+    }
 }

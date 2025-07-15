@@ -23,14 +23,13 @@ class SongControllerMapper {
         List<SongControllerResponseDto> songControllerResponseDtos = allSongs.stream()
                 .map(songDto -> SongControllerResponseDto.builder()
                         .name(songDto.name())
-                        .artist(songDto.artist())
                         .build())
                 .collect(Collectors.toList());
         return new GetAllSongsResponseDto(songControllerResponseDtos);
     }
 
     public static GetSingleSongResponseDto mapSongDtoToGetSingleSongResponseDto(SongDto song) {
-        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(song.name(), song.artist());
+        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(song.name());
         return new GetSingleSongResponseDto(songControllerResponseDto);
     }
 
@@ -40,7 +39,7 @@ class SongControllerMapper {
     }
 
     private static SongControllerResponseDto mapFromSongDtoToSongControllerResponseDto(final SongDto song) {
-        return new SongControllerResponseDto(song.name(), song.artist());
+        return new SongControllerResponseDto(song.name());
     }
 
     public static DeleteSongResponseDto mapFromSongToDeleteSongResponseDto(Long id) {
@@ -48,24 +47,26 @@ class SongControllerMapper {
     }
 
     public static UpdateSongResponseDto mapFromSongDtoToUpdateSongResponseDto(SongDto song) {
-        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(song.name(), song.artist());
-        return new UpdateSongResponseDto(songControllerResponseDto.name(), songControllerResponseDto.artist());
+        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(song.name());
+        return new UpdateSongResponseDto(songControllerResponseDto.name());
     }
 
     public static PartiallyUpdateSongResponseDto mapFromSongToPartiallyUpdateSongDto(SongDto updatedSong) {
-        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(updatedSong.name(), updatedSong.artist());
+        SongControllerResponseDto songControllerResponseDto = new SongControllerResponseDto(updatedSong.name());
         return new PartiallyUpdateSongResponseDto(songControllerResponseDto);
     }
 
     static SongDto mapFromUpdateSongRequestDtoToSongDto(final @Valid UpdateSongRequestDto request) {
-        return new SongDto(request.song(), request.artist());
+        return new SongDto(request.song());
     }
 
     static SongDto mapFromPartiallyUpdateSongRequestDtoToSongDto(final PartiallyUpdateSongRequestDto request) {
-        return new SongDto(request.song(), request.artist());
+        return new SongDto(request.song());
     }
 
     static SongDto mapFromCreateSongRequestDtoToSongDto(final @Valid CreateSongRequestDto request) {
-        return new SongDto(request.song(), request.artist());
+        return new SongDto(request.song());
     }
+
+
 }

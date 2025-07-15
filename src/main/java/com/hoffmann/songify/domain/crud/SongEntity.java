@@ -40,9 +40,6 @@ class SongEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String artist;
-
     private Instant releaseDate;
 
     private Long duration;
@@ -53,15 +50,13 @@ class SongEntity extends BaseEntity {
     @OneToOne
     private Genre genre;
 
-    public SongEntity(String name, String artist) {
+    public SongEntity(String name) {
         this.name = name;
-        this.artist = artist;
     }
 
     @Override
     public String toString() {
-        return "name='" + name +
-                ", artist='" + artist;
+        return "name='" + name;
     }
 
 }
