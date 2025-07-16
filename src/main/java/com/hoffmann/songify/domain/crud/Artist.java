@@ -1,6 +1,7 @@
 package com.hoffmann.songify.domain.crud;
 
 import com.hoffmann.songify.domain.crud.util.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ class Artist extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Album> albums = new HashSet<>();
 
     Artist(final String name) {
