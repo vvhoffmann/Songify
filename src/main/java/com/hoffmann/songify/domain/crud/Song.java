@@ -28,7 +28,7 @@ import java.time.Instant;
 @Table(name = "song")
 @NoArgsConstructor
 @AllArgsConstructor
-class SongEntity extends BaseEntity {
+class Song extends BaseEntity {
 
     @Id
     @GeneratedValue(generator = "song_id_seq", strategy = GenerationType.SEQUENCE)
@@ -52,7 +52,11 @@ class SongEntity extends BaseEntity {
     @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Genre genre;
 
-    public SongEntity(final String name, final Instant releaseDate, final Long duration, final SongLanguage language) {
+    Song(final String name) {
+        this.name = name;
+    }
+
+    Song(final String name, final Instant releaseDate, final Long duration, final SongLanguage language) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.duration = duration;

@@ -13,23 +13,23 @@ class SongUpdater {
     SongRepository songRepository;
     SongRetriever songRetriever;
 
-    SongDto updateById(Long id, SongEntity song) {
+    SongDto updateById(Long id, Song song) {
         songRetriever.existsById(id);
         return songRepository.updateById(id, song);
     }
 
-    SongDto updatePartiallyById(Long id, SongEntity song) {
-        SongEntity oldSong = songRetriever.findSongById(id);
+    SongDto updatePartiallyById(Long id, Song song) {
+        Song oldSong = songRetriever.findSongById(id);
         String newSongName = song.getName();
 
-        SongEntity.SongEntityBuilder songBuilder = SongEntity.builder();
+        Song.SongBuilder songBuilder = Song.builder();
 
         if (newSongName != null)
             songBuilder.name(newSongName);
         else
             songBuilder.name(oldSong.getName());
 
-        SongEntity songToSave = songBuilder.build();
+        Song songToSave = songBuilder.build();
 
         return songRepository.updateById(id, songToSave);
     }

@@ -38,7 +38,7 @@ class ArtistDeleter {
 
         final Set<Long> allSongsIdsToRemove = albumsWithOnlyOneArtist.stream()
                 .flatMap(album -> album.getSongs().stream())
-                .map(SongEntity::getId)
+                .map(Song::getId)
                 .collect(Collectors.toSet());
 
         songDeleter.deleteAllByIds(allSongsIdsToRemove);

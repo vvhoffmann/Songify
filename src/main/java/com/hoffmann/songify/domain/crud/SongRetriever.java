@@ -33,7 +33,7 @@ class SongRetriever {
                 .orElseThrow(() -> new SongNotFoundException("Song with id " + id + " doesn't exist"));
     }
 
-    SongEntity findSongById(Long id) {
+    Song findSongById(Long id) {
         return songRepository.findById(id)
                 .orElseThrow(() -> new SongNotFoundException("Song with id " + id + " doesn't exist"));
     }

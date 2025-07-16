@@ -11,28 +11,28 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-interface SongRepository extends Repository<SongEntity, Long> {
+interface SongRepository extends Repository<Song, Long> {
 
-    SongEntity save(SongEntity song);
+    Song save(Song song);
 
-    @Query("SELECT s FROM SongEntity s")
-    List<SongEntity> findAll(@PageableDefault(page = 0, size = 12) Pageable pageable);
+    @Query("SELECT s FROM Song s")
+    List<Song> findAll(@PageableDefault(page = 0, size = 12) Pageable pageable);
 
-    @Query("SELECT s FROM SongEntity s WHERE s.id = :id")
-    Optional<SongEntity> findById(Long id);
+    @Query("SELECT s FROM Song s WHERE s.id = :id")
+    Optional<Song> findById(Long id);
 
     @Modifying
-    @Query("DELETE FROM SongEntity s WHERE s.id = :id")
+    @Query("DELETE FROM Song s WHERE s.id = :id")
     void deleteById(Long id);
 
     @Modifying
-    @Query("UPDATE SongEntity s SET s.name = :#{#newSong.name} WHERE s.id = :id")
-    SongDto updateById(Long id, SongEntity newSong);
+    @Query("UPDATE Song s SET s.name = :#{#newSong.name} WHERE s.id = :id")
+    SongDto updateById(Long id, Song newSong);
 
-    @Query("SELECT s FROM SongEntity s WHERE s.genre = :genreId")
-    List<SongEntity> findAllSongsByGenreId(Long genreId);
+    @Query("SELECT s FROM Song s WHERE s.genre = :genreId")
+    List<Song> findAllSongsByGenreId(Long genreId);
 
     @Modifying
-    @Query("delete from SongEntity s where s.id in :ids")
+    @Query("delete from Song s where s.id in :ids")
     int deleteByIds(Collection<Long> ids);
 }

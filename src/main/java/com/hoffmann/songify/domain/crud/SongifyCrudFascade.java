@@ -63,13 +63,13 @@ public class SongifyCrudFascade {
 
     public SongDto updateSongById(Long id, SongRequestDto newSong) {
         SongLanguage songLanguage = SongLanguage.valueOf(newSong.language().name());
-        SongEntity song = new SongEntity(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
+        Song song = new Song(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
         return songUpdater.updateById(id, song);
     }
 
     public SongDto updatePartiallySongById(Long id, SongRequestDto newSong) {
         SongLanguage songLanguage = SongLanguage.valueOf(newSong.language().name());
-        SongEntity song = new SongEntity(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
+        Song song = new Song(newSong.name(), newSong.releaseDate(), newSong.duration(), songLanguage);
         return songUpdater.updatePartiallyById(id, song);
     }
 
@@ -79,6 +79,10 @@ public class SongifyCrudFascade {
 
     public ArtistDto addArtist(ArtistRequestDto artistToAdd) {
         return artistAdder.save(artistToAdd.name());
+    }
+
+    public ArtistDto addArtistWithDefaultAlbumAndSong(ArtistRequestDto artistToAdd) {
+        return artistAdder.addArtistWithDefaultAlbumAndSong(artistToAdd.name());
     }
 
     public GenreDto addGenre(GenreRequestDto genreRequestDto) {
