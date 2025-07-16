@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter(AccessLevel.PACKAGE)
 @Setter(AccessLevel.PACKAGE)
 @Entity
-@Table(name="genre")
+@Table(name = "genre")
 @NoArgsConstructor
 @AllArgsConstructor
 class Genre extends BaseEntity {

@@ -1,10 +1,12 @@
 package com.hoffmann.songify.domain.crud;
 
 import com.hoffmann.songify.domain.crud.util.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,7 +49,7 @@ class SongEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SongLanguage language;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Genre genre;
 
     public SongEntity(final String name, final Instant releaseDate, final Long duration, final SongLanguage language) {

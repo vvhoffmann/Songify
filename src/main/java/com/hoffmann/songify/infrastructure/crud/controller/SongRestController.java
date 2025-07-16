@@ -36,7 +36,7 @@ public class SongRestController {
 
     @GetMapping
     public ResponseEntity<GetAllSongsResponseDto> getAllSongs(Pageable pageable) {
-        List<SongDto> allSongs = songifyCrudFascade.findAll(pageable);
+        List<SongDto> allSongs = songifyCrudFascade.findAllSongs(pageable);
         GetAllSongsResponseDto response = SongControllerMapper.mapFromSongDtoToGetAllSongsResponseDto(allSongs);
         return ResponseEntity.ok(response);
     }
@@ -57,23 +57,23 @@ public class SongRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DeleteSongResponseDto> deleteSongByIdUsingPathVariable(@PathVariable Long id) {
-        songifyCrudFascade.deleteById(id);
+    public ResponseEntity<DeleteSongResponseDto> deleteSongById(@PathVariable Long id) {
+        songifyCrudFascade.deleteSongById(id);
         DeleteSongResponseDto body = SongControllerMapper.mapFromSongToDeleteSongResponseDto(id);
         return ResponseEntity.ok(body);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SongDto> updateSong(@PathVariable Long id,
-                                                            @RequestBody @Valid SongRequestDto request) {
-        final SongDto songDto = songifyCrudFascade.updateById(id, request);
+                                              @RequestBody @Valid SongRequestDto request) {
+        final SongDto songDto = songifyCrudFascade.updateSongById(id, request);
         return ResponseEntity.ok(songDto);
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<PartiallyUpdateSongResponseDto> updateSongPartially(@PathVariable Long id,
                                                                               @RequestBody SongRequestDto request) {
-        SongDto savedSong = songifyCrudFascade.updatePartiallyById(id, request);
+        SongDto savedSong = songifyCrudFascade.updatePartiallySongById(id, request);
 
         log.info("Updated song: {}", savedSong);
 

@@ -1,6 +1,7 @@
 package com.hoffmann.songify.infrastructure.crud.controller;
 
 import com.hoffmann.songify.domain.crud.dto.GenreDto;
+import com.hoffmann.songify.infrastructure.crud.controller.dto.CreateGenreResponseDto;
 
 class GenreControllerMapper {
 

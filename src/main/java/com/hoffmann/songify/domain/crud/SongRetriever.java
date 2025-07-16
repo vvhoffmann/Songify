@@ -1,5 +1,6 @@
 package com.hoffmann.songify.domain.crud;
 
+import com.hoffmann.songify.domain.crud.dto.SongDto;
 import com.hoffmann.songify.infrastructure.apivalidation.exception.SongNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -15,9 +16,21 @@ class SongRetriever {
 
     private final SongRepository songRepository;
 
-    List<SongEntity> findAll(Pageable pageable) {
+    List<SongDto> findAll(Pageable pageable) {
         log.info("retrieving all songs");
-        return songRepository.findAll(pageable);
+        return songRepository.findAll(pageable)
+                .stream()
+                .map(song -> new SongDto(song.getId(), song.getName()))
+                .toList();
+    }
+
+    SongDto findSongDtoById(Long id) {
+        return songRepository.findById(id)
+                .map(song -> new SongDto(
+                        song.getId(),
+                        song.getName()
+                ))
+                .orElseThrow(() -> new SongNotFoundException("Song with id " + id + " doesn't exist"));
     }
 
     SongEntity findSongById(Long id) {
