@@ -4,6 +4,8 @@ import com.hoffmann.songify.domain.crud.dto.AlbumDto;
 import com.hoffmann.songify.domain.crud.dto.AlbumWithArtistsAndSongsDto;
 import com.hoffmann.songify.domain.crud.dto.ArtistDto;
 import com.hoffmann.songify.domain.crud.dto.SongDto;
+
+import com.hoffmann.songify.infrastructure.apivalidation.exception.AlbumNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +47,12 @@ class AlbumRetriever {
 
     Set<Album> findAllAlbumsByArtistId(final Long artistId) {
         return albumRepository.findAllByArtistId(artistId);
+    }
+
+    Album findById(final Long albumId) {
+        return albumRepository.findById(albumId)
+                .orElseThrow(() ->
+                        new AlbumNotFoundException("Album with id: " + albumId + " not found")
+                );
     }
 }

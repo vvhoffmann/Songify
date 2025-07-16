@@ -28,12 +28,14 @@ public class SongifyCrudFascade {
 
     private final ArtistAdder artistAdder;
     private final ArtistRetriever artistRetriever;
+    private final ArtistUpdater artistUpdater;
     private final ArtistDeleter artistDeleter;
 
     private final GenreAdder genreAdder;
 
     private final AlbumAdder albumAdder;
     private final AlbumRetriever albumRetriever;
+    private final ArtistAssigner artistAssigner;
 
     public List<SongDto> findAllSongs(Pageable pageable) {
         return songRetriever.findAll(pageable);
@@ -71,6 +73,10 @@ public class SongifyCrudFascade {
         return songUpdater.updatePartiallyById(id, song);
     }
 
+    public ArtistDto updateArtistNameById(Long artistId, String name) {
+        return artistUpdater.updateArtistNameById(artistId, name);
+    }
+
     public ArtistDto addArtist(ArtistRequestDto artistToAdd) {
         return artistAdder.save(artistToAdd.name());
     }
@@ -85,5 +91,9 @@ public class SongifyCrudFascade {
 
     public void deleteArtistByIdWithSongsAndAlbums(final Long id) {
         artistDeleter.deleteArtistsByIdWithAlbumsAndSongs(id);
+    }
+
+    public void assignArtistToAlbum(final Long artistId, final Long albumId) {
+        artistAssigner.addArtistToAlbum(artistId, albumId);
     }
 }
