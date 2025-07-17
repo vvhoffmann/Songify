@@ -17,7 +17,7 @@ class InMemorySongRepository implements SongRepository{
 
     @Override
     public List<Song> findAll(final Pageable pageable) {
-        return null;
+        return db.values().stream().toList();
     }
 
     @Override
@@ -42,7 +42,8 @@ class InMemorySongRepository implements SongRepository{
 
     @Override
     public int deleteByIds(final Collection<Long> ids) {
-        return 0;
+        ids.forEach(id -> db.remove(id));
+        return 1;
     }
 
     @Override

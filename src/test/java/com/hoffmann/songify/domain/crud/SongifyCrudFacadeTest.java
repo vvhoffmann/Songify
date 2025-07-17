@@ -95,5 +95,14 @@ class SongifyCrudFacadeTest {
         //then
         assertThat(songifyCrudFacade.findAllArtists(Pageable.unpaged()).isEmpty());
         assertThat(songifyCrudFacade.findAllAlbums().isEmpty());
+        assertThat(songifyCrudFacade.findAllSongs(Pageable.unpaged()).isEmpty());
+    }
+
+    @Test
+    @DisplayName("Should delete only artist from album by id When there were more than 1 artist in album")
+    public void should_delete_only_artist_from_album_by_when_there_were_more_than_one_artist_in_album() {
+//        assertThat(songifyCrudFacade.findAlbumByIdWithArtistsAndSongs(albumId)
+//                .getArtists()
+//                .size()).isGreaterThanOrEqualTo(2);
     }
 }

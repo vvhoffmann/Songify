@@ -10,11 +10,11 @@ public interface AlbumInfo {
 
     Instant getReleaseDate();
 
-    Set<SongEntityInfo> getSongs();
+    Set<SongInfo> getSongs();
 
     Set<ArtistInfo> getArtists();
 
-    interface SongEntityInfo {
+    interface SongInfo {
         Long getId();
 
         String getName();

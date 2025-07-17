@@ -22,7 +22,10 @@ class InMemoryAlbumRepository implements AlbumRepository {
 
     @Override
     public Optional<Album> findAlbumByIdWithSongsAndArtists(final Long id) {
-        return Optional.empty();
+        Album album = db.get(id);
+        album.getArtists();
+        album.getSongs();
+        return Optional.ofNullable(album);
     }
 
     @Override
