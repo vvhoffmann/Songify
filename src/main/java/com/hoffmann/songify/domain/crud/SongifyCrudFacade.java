@@ -20,14 +20,15 @@ import java.util.Set;
 @Service
 @AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
 @Transactional
-public class SongifyCrudFascade {
+public class SongifyCrudFacade {
     private final SongAdder songAdder;
     private final SongRetriever songRetriever;
-    private final SongDeleter songDeleter;
     private final SongUpdater songUpdater;
+    private final SongDeleter songDeleter;
 
     private final ArtistAdder artistAdder;
     private final ArtistRetriever artistRetriever;
+    private final ArtistAssigner artistAssigner;
     private final ArtistUpdater artistUpdater;
     private final ArtistDeleter artistDeleter;
 
@@ -35,7 +36,6 @@ public class SongifyCrudFascade {
 
     private final AlbumAdder albumAdder;
     private final AlbumRetriever albumRetriever;
-    private final ArtistAssigner artistAssigner;
 
     public List<SongDto> findAllSongs(Pageable pageable) {
         return songRetriever.findAll(pageable);
@@ -89,8 +89,8 @@ public class SongifyCrudFascade {
         return genreAdder.addGenre(genreRequestDto.name());
     }
 
-    public AlbumDto addAlbumWithSong(AlbumRequestDto albumRequestDto) {
-        return albumAdder.addAlbum(albumRequestDto.songId(), albumRequestDto.title(), albumRequestDto.releaseDate());
+    public AlbumDto addAlbumWithSong(AlbumRequestDto albumRequestDto, SongRequestDto songRequestDto) {
+        return albumAdder.addAlbum(songRequestDto, albumRequestDto.title(), albumRequestDto.releaseDate());
     }
 
     public void deleteArtistByIdWithSongsAndAlbums(final Long id) {
@@ -99,5 +99,21 @@ public class SongifyCrudFascade {
 
     public void assignArtistToAlbum(final Long artistId, final Long albumId) {
         artistAssigner.addArtistToAlbum(artistId, albumId);
+    }
+
+    public Set<AlbumDto> findAlbumsByArtistId(final Long artistId) {
+        return albumRetriever.findAlbumsByArtistId(artistId);
+    }
+
+    public Set<AlbumDto> findAllAlbums() {
+        return albumRetriever.findAll();
+    }
+
+    public SongDto addSong(final SongRequestDto songRequestDto) {
+        return songAdder.save(songRequestDto);
+    }
+
+    public void addArtistToAlbum(final Long artistId, final Long albumId) {
+        artistAssigner.addArtistToAlbum(artistId,albumId);
     }
 }

@@ -1,6 +1,6 @@
 package com.hoffmann.songify.infrastructure.crud.controller;
 
-import com.hoffmann.songify.domain.crud.SongifyCrudFascade;
+import com.hoffmann.songify.domain.crud.SongifyCrudFacade;
 import com.hoffmann.songify.domain.crud.dto.ArtistDto;
 import com.hoffmann.songify.domain.crud.dto.ArtistRequestDto;
 import com.hoffmann.songify.infrastructure.crud.controller.dto.CreateArtistResponseDto;
@@ -28,45 +28,45 @@ import java.util.Set;
 @RequestMapping("/artists")
 class ArtistRestController {
 
-    private final SongifyCrudFascade songifyCrudFascade;
+    private final SongifyCrudFacade songifyCrudFacade;
 
     @PostMapping("/{name}")
     ResponseEntity<CreateArtistResponseDto> postArtist(@RequestBody ArtistRequestDto artistToAdd) {
-        songifyCrudFascade.addArtist(artistToAdd);
+        songifyCrudFacade.addArtist(artistToAdd);
         CreateArtistResponseDto body = ArtistControllerMapper.mapFromArtistDtoToCreateArtistResponseDto(artistToAdd);
         return ResponseEntity.ok(body);
     }
 
     @PostMapping("/{name}/default")
     ResponseEntity<CreateArtistResponseDto> postArtistWithDefaultAlbumAndSong(@RequestBody ArtistRequestDto artistToAdd) {
-        songifyCrudFascade.addArtistWithDefaultAlbumAndSong(artistToAdd);
+        songifyCrudFacade.addArtistWithDefaultAlbumAndSong(artistToAdd);
         CreateArtistResponseDto body = ArtistControllerMapper.mapFromArtistDtoToCreateArtistResponseDto(artistToAdd);
         return ResponseEntity.ok(body);
     }
 
     @GetMapping
     ResponseEntity<GetAllArtistsResponseDto> getArtists(Pageable pageable) {
-        final Set<ArtistDto> allArtists = songifyCrudFascade.findAllArtists(pageable);
+        final Set<ArtistDto> allArtists = songifyCrudFacade.findAllArtists(pageable);
         GetAllArtistsResponseDto body = new GetAllArtistsResponseDto(allArtists);
         return ResponseEntity.ok(body);
     }
 
     @DeleteMapping("/{artistId}")
     ResponseEntity<DeleteArtistResponseDto> removeArtistByIdWithSongsAndAlbums(@PathVariable Long artistId) {
-        songifyCrudFascade.deleteArtistByIdWithSongsAndAlbums(artistId);
+        songifyCrudFacade.deleteArtistByIdWithSongsAndAlbums(artistId);
         DeleteArtistResponseDto body = new DeleteArtistResponseDto("deleting artist with id : " + artistId + " succeed", HttpStatus.OK);
         return ResponseEntity.ok(body);
     }
 
     @PutMapping("/{artistId}/{albumId}")
     ResponseEntity<String> assignArtistToAlbumByIds(@PathVariable Long artistId, @PathVariable Long albumId) {
-        songifyCrudFascade.assignArtistToAlbum(artistId, albumId);
+        songifyCrudFacade.assignArtistToAlbum(artistId, albumId);
         return ResponseEntity.ok("assigned artist with it:" + artistId + " to album with id : " + albumId);
     }
 
     @PutMapping("/{artistId}")
     ResponseEntity<ArtistDto> assignArtistToAlbumByIds(@PathVariable Long artistId, @Valid @RequestBody ArtistUpdateRequestDto requestDto) {
-        final ArtistDto artistDto = songifyCrudFascade.updateArtistNameById(artistId, requestDto.newArtistName());
+        final ArtistDto artistDto = songifyCrudFacade.updateArtistNameById(artistId, requestDto.newArtistName());
 
         return ResponseEntity.ok(artistDto);
     }

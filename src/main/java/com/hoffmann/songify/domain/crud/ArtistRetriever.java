@@ -27,6 +27,7 @@ class ArtistRetriever {
 
     Artist findById(final Long artistId) {
         return artistRepository.findById(artistId)
-                .orElseThrow(() -> new ArtistNotFoundException("Artist not found"));
+                .orElseThrow(() -> new ArtistNotFoundException("Artist with id " + artistId + " not found"));
     }
+
 }

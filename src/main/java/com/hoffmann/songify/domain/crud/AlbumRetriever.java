@@ -55,4 +55,15 @@ class AlbumRetriever {
                         new AlbumNotFoundException("Album with id: " + albumId + " not found")
                 );
     }
+
+    Set<AlbumDto> findAlbumsByArtistId(final Long artistId) {
+        final Set<Album> albums = albumRepository.findAllByArtistId(artistId);
+        return albums.stream()
+                .map(album -> new AlbumDto(album.getId(), album.getTitle()))
+                .collect(Collectors.toSet());
+    }
+
+    Set<AlbumDto> findAll() {
+        return albumRepository.findAll();
+    }
 }

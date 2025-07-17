@@ -12,13 +12,12 @@ import java.util.stream.Collectors;
 @Log4j2
 class ArtistDeleter {
 
+    private final ArtistRepository artistRepository;
     private final ArtistRetriever artistRetriever;
     private final AlbumRetriever albumRetriever;
 
-    private final ArtistRepository artistRepository;
-
-    private final SongDeleter songDeleter;
     private final AlbumDeleter albumDeleter;
+    private final SongDeleter songDeleter;
 
     void deleteArtistsByIdWithAlbumsAndSongs(final Long artistId) {
         final Artist artist = artistRetriever.findById(artistId);

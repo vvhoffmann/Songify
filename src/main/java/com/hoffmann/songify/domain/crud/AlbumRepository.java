@@ -1,5 +1,6 @@
 package com.hoffmann.songify.domain.crud;
 
+import com.hoffmann.songify.domain.crud.dto.AlbumDto;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -30,5 +31,8 @@ interface AlbumRepository extends Repository<Album, Long> {
 
     @Modifying
     @Query("delete from Album a where a.id in :ids")
-    int deleteByIdIn(Collection<Long> ids);
+    int deleteByIds(Collection<Long> ids);
+
+    @Query("SELECT a FROM Album a")
+    Set<AlbumDto> findAll();
 }
